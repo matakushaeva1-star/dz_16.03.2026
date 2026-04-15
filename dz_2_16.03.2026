@@ -1,0 +1,41 @@
+# Общий шаблон (Человек)
+class User:
+    def __init__(self, name):
+        self.name = name  # Запоминаем имя
+
+    def login(self):
+        # Все пользователи умеют входить в систему одинаково
+        print(f"Пользователь {self.name} вошёл в систему")
+
+    def get_permissions(self):
+        # По умолчанию разрешено "Только чтение"
+        return "Только чтение"
+
+# Улучшенный шаблон (Админ)
+# Пишем (User), чтобы админ сразу умел всё, что умеет юзер
+class Admin(User):
+    def get_permissions(self):
+        # Перезаписываем права (разрешено все)
+        return "Чтение, Запись, Удаление"
+
+    def ban_user(self, target_user):
+        # Уникальное действие, админ может забанить другого
+        print(f"Админ {self.name} забанил пользователя {target_user.name}!")
+
+# Проверка
+
+# Создаем обычного юзера
+ivan = User("Иван")
+# Создаем босса (админ)
+boss = Admin("Главный Босс")
+
+# Оба входят в систему
+ivan.login()
+boss.login()
+
+# Смотрим, что им можно (права)
+print(f"Что может {ivan.name}: {ivan.get_permissions()}")
+print(f"Что может {boss.name}: {boss.get_permissions()}")
+
+# Босс наводит порядок
+boss.ban_user(ivan)
