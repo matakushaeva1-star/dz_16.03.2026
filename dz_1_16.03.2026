@@ -1,0 +1,31 @@
+# Родительский класс (Общий шаблон для всех фигур)
+class Shape:
+    def __init__(self, color, filled):
+        self.color = color  # У каждой фигуры есть цвет
+        self.filled = filled  # И флаг  фигура она (True) или нет (False)
+    def get_info(self):
+        return f"Цвет: {self.color}, Заливка: {self.filled}" # общие свойства
+
+# Дочерний класс (Специфическая фигура - Прямоугольник)
+# В скобках Shape, чтобы Прямоугольник "наследовал" свойства родителя
+class Rectangle(Shape):
+    def __init__(self, color, filled, width, height):
+        super().__init__(color, filled) # super() говорит "Возьми цвет и заливку из главного класса Shape"
+        self.width = width  # Добавить свои уникальные свойства
+        self.height = height
+
+    def get_info(self):
+        # Взять старую инфу о цвете и прикрепить к ней размеры
+        return f"Прямоугольник. {super().get_info()}, Размер: {self.width}x{self.height}"
+
+    def get_area(self):
+        # площадь по формуле: ширина * высота
+        return self.width * self.height
+
+# 3. Проверка (Создать реальные объекты)
+if __name__ == "__main__":
+    simple_figure = Shape("красный", True) # Создать обычную красную фигуру
+    rect = Rectangle("синий", False, 10, 20) # Создать синий прямоугольник 10 на 20
+
+    print(rect.get_info())
+    print("Площадь:", rect.get_area())
